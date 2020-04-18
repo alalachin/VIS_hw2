@@ -1,0 +1,49 @@
+{
+    "name" : "榮國府",
+    "children" :
+    [
+        {
+            "name":"賈母",
+            "children" :
+            [
+                {
+                    "name":"賈赦",
+                    "spouse":"邢夫人",
+                    "children":
+                    [
+                        {
+                            "name":"賈璉",
+                            "spouse":"王熙鳳",
+                            "children":["賈巧姐"]
+                        },
+                        {"name":"賈迎春"}
+                    ]
+                },
+                {
+                    "name":"賈政",
+                    "spouse":"王夫人",
+                    "children":
+                    [
+                        {
+                            "name":"賈珠",
+                            "spouse":"李紈",
+                            "children":["賈蘭"]
+                        },
+                        {"name":"賈元春"},
+                        {"name":"賈寶玉"},
+                        {"name":"賈環"},
+                        {"name":"賈探春"}
+                    ]
+                },
+                {
+                    "name":"賈敏",
+                    "spouse":"林如海",
+                    "children":
+                    [
+                        {"name":"林黛玉"}
+                    ]
+                }
+            ]
+        }
+    ]
+}

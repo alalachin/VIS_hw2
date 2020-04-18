@@ -14,7 +14,7 @@
                         {
                             "name":"賈璉",
                             "spouse":"王熙鳳",
-                            "children":["賈巧姐"]
+                            "children":[{"name":"賈巧姐"}]
                         },
                         {"name":"賈迎春"}
                     ]
@@ -27,7 +27,7 @@
                         {
                             "name":"賈珠",
                             "spouse":"李紈",
-                            "children":["賈蘭"]
+                            "children":[{"name":"賈蘭"}]
                         },
                         {"name":"賈元春"},
                         {"name":"賈寶玉"},

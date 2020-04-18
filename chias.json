@@ -1,47 +1,122 @@
 {
     "name" : "榮國府",
+    "id":1,
     "children" :
     [
         {
             "name":"賈母",
+            "id":2,
+            "no_parent":true,
             "children" :
             [
                 {
                     "name":"賈赦",
-                    "spouse":"邢夫人",
+                    "id":3
+                },
+                {
+                    "name":"",
+                    "id":5,
+                    "hidden": true,
+                    "no_parent":true,
                     "children":
                     [
                         {
                             "name":"賈璉",
-                            "spouse":"王熙鳳",
-                            "children":[{"name":"賈巧姐"}]
+                            "id":6
+                        },                        
+                        {
+                            "name":"",
+                            "id":8,
+                            "hidden": true,
+                            "no_parent":true,
+                            "children":[{"name":"賈巧姐", "id":9}]
                         },
-                        {"name":"賈迎春"}
+                        {
+                            "name":"王熙鳳",
+                            "id":7,
+                            "no_parent":true,
+                        },                       
+                        {   
+                            "name":"賈迎春",
+                            "id":10
+                        }
                     ]
                 },
                 {
+                    "name":"邢夫人",
+                    "id":4,
+                    "no_parent":true,
+                },
+                {
                     "name":"賈政",
-                    "spouse":"王夫人",
+                    "id":11
+                },                                
+                {
+                    "name":"",
+                    "id":13,
+                    "hidden": true,
+                    "no_parent":true,
                     "children":
                     [
                         {
                             "name":"賈珠",
-                            "spouse":"李紈",
-                            "children":[{"name":"賈蘭"}]
+                            "id":14
                         },
-                        {"name":"賈元春"},
-                        {"name":"賈寶玉"},
-                        {"name":"賈環"},
-                        {"name":"賈探春"}
+                        {
+                            "name":"",
+                            "id":16,
+                            "hidden": true,
+                            "no_parent":true,
+                            "children":[{"name":"賈蘭", "id":17}]
+                        },
+                        {
+                            "name":"李紈",
+                            "id":15,
+                            "no_parent":true,
+                        },                        
+                        {   
+                            "name":"賈元春",
+                            "id":18
+                        },
+                        {   
+                            "name":"賈寶玉",
+                            "id":19
+                        },
+                        {   
+                            "name":"賈環",
+                            "id":20
+                        },
+                        {
+                            "name":"賈探春",
+                            "id":21
+                        }
                     ]
                 },
                 {
+                    "name":"王夫人",
+                    "id":12
+                },
+                {
                     "name":"賈敏",
-                    "spouse":"林如海",
+                    "id":22
+                },                                
+                {
+                    "name":"",
+                    "id":24,
+                    "hidden": true,
+                    "no_parent":true,
                     "children":
                     [
-                        {"name":"林黛玉"}
+                        {
+                            "name":"林黛玉",
+                            "id":25
+                        }
                     ]
+                },
+                {
+                    "name":"林如海",
+                    "id":23,
+                    "no_parent":true,
                 }
             ]
         }

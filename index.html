@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="basem.css" />
+<!-- <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script> -->
+  <head>
+    <meta charset="utf-8">
+    <title>從金陵十二釵看紅樓夢</title>
+    <h1>從金陵十二釵看紅樓夢家系</h1>
+    <br>
+    <p>＿欲知詳細族譜，且待按下下列鈕後分解！＿</p>
+  </head>
+
+  <body>
+  	<div class='button'></div>
+  	<div id='forces'></div>
+  	<script src="http://d3js.org/d3.v4.js"></script>
+  
+  <script>
+
+
+var nodes = [
+  {"type":'family',"id":'f1',"name":'shi', "image":""},
+  {"type":'person',"id":'p1',"name":'史太君',"sex":'f'},
+  {"type":'person',"id":'p2',"name":'史某-1', "sex":'m'},
+
+  {"type":'family',"id":'f2',"name":'shi', "image":""},
+  {"type":'person',"id":'p3',"name":'史某-2', "sex":'m'},
+
+  {"type":'family',"id":'f3',"name":'shi', "image":""},
+  {"type":'person',"id":'p4',"name":'史湘雲', "sex":'f', "JL12": true},
+
+  {"type":'family',"id":'f4',"name":'chia', "image":""},
+  {"type":'person',"id":'p5',"name":'賈代化',"sex":'m'},
+  // {"type":'person',"id":'p6',"name":'賈敷',"sex":'m'},
+  {"type":'person',"id":'p7',"name":'賈敬',"sex":'m'},
+
+  {"type":'family',"id":'f5',"name":'chia', "image":""},
+  {"type":'person',"id":'p8',"name":'賈珍',"sex":'m'},
+  {"type":'person',"id":'p9',"name":'賈惜春',"sex":'f', "JL12": true},
+
+  {"type":'family',"id":'f6',"name":'chia', "image":""},
+  // {"type":'person',"id":'p10',"name":'尤氏',"sex":'f'},
+  {"type":'person',"id":'p11',"name":'賈蓉',"sex":'m'},
+  // {"type":'person',"id":'p12',"name":'賈薔',"sex":'m'},
+
+   {"type":'family',"id":'f7',"name":'chia', "image":""},
+  {"type":'person',"id":'p13',"name":'秦可卿',"sex":'f', "JL12": true},
+
+  // {"type":'family',"id":'f8',"name":'', "image":""},
+  // {"type":'person',"id":'p14',"name":'秦業',"sex":'m'},
+  // {"type":'person',"id":'p15',"name":'秦鐘',"sex":'m'},
+
+  //Abraham and Mona's Family wang
+  {"type":'family',"id":'f9',"name":'chia', "image":""},
+  {"type":'person',"id":'p16',"name":'賈代善',"sex":'m'},
+  {"type":'person',"id":'p17',"name":'賈赦',"sex":'m'},
+  {"type":'person',"id":'p18',"name":'賈政',"sex":'m'},
+  {"type":'person',"id":'p19',"name":'賈敏',"sex":'m'},
+
+  {"type":'family',"id":'f10',"name":'chia', "image":""},
+  // {"type":'person',"id":'p20',"name":'邢夫人',"sex":'f'},
+  {"type":'person',"id":'p21',"name":'賈璉',"sex":'m'},
+  {"type":'person',"id":'p22',"name":'賈迎春',"sex":'f', "JL12": true},
+
+  {"type":'family',"id":'f11',"name":'chia', "image":""},
+  {"type":'person',"id":'p23',"name":'王熙鳳',"sex":'f', "JL12": true},
+  {"type":'person',"id":'p24',"name":'賈巧姐',"sex":'f', "JL12": true},
+
+  {"type":'family',"id":'f12',"name":'chia', "image":""},
+  {"type":'person',"id":'p25',"name":'王夫人',"sex":'f'},
+  {"type":'person',"id":'p26',"name":'賈珠',"sex":'m'},
+  {"type":'person',"id":'p27',"name":'賈元春',"sex":'f', "JL12": true},
+  {"type":'person',"id":'p28',"name":'賈寶玉',"sex":'m'},
+
+  {"type":'family',"id":'f13',"name":'chia', "image":""},
+  // {"type":'person',"id":'p29',"name":'趙姨娘',"sex":'f'},  
+  {"type":'person',"id":'p30',"name":'賈探春',"sex":'f', "JL12": true}, 
+  // {"type":'person',"id":'p31',"name":'賈環',"sex":'m'}, 
+
+  {"type":'family',"id":'f14',"name":'chia', "image":""},
+  {"type":'person',"id":'p32',"name":'李紈',"sex":'f', "JL12": true},
+  // {"type":'person',"id":'p33',"name":'賈蘭',"sex":'m'},
+
+  {"type":'family',"id":'f15',"name":'', "image":""},
+  // {"type":'person',"id":'p34',"name":'林如海',"sex":'m'},
+  {"type":'person',"id":'p35',"name":'林黛玉',"sex":'f', "JL12": true},
+
+  {"type":'family',"id":'f16',"name":'wang', "image":""},
+  {"type":'person',"id":'p36',"name":'王某',"sex":'m'},
+  // {"type":'person',"id":'p37',"name":'王子騰',"sex":'m'},
+  // {"type":'person',"id":'p38',"name":'王子勝',"sex":'m'},
+  {"type":'person',"id":'p39',"name":'薛姨媽',"sex":'f'},
+
+  {"type":'family',"id":'f17',"name":'shue', "image":""},
+  // {"type":'person',"id":'p40',"name":'薛蟠',"sex":'m'},
+  {"type":'person',"id":'p41',"name":'薛寶釵',"sex":'f', "JL12": true},
+
+  // {"type":'family',"id":'f18',"name":'', "image":""},
+  // {"type":'person',"id":'p42',"name":'甄士隱',"sex":'m'},
+  // {"type":'person',"id":'p43',"name":'封氏',"sex":'f'},
+
+  // {"type":'family',"id":'f19',"name":'', "image":""},
+  // {"type":'person',"id":'p44',"name":'甄英蓮',"sex":'f'},
+
+  {"type":'family',"id":'f20',"name":'wang', "image":""},
+  // {"type":'person',"id":'p45',"name":'王仁',"sex":'m'},
+
+  {"type":'family',"id":'f22',"name":'chia', "image":""},
+  {"type":'person',"id":'p46',"name":'寧國公',"sex":'m'},
+
+  {"type":'family',"id":'f23',"name":'chia', "image":""},
+  {"type":'person',"id":'p47',"name":'榮國公',"sex":'m'},
+
+  {"type":'family',"id":'f24',"name":'chia', "image":""},
+
+  {"type":'family',"id":'f25',"name":'chia', "image":""},
+
+  {"type":'person',"id":'p48',"name":'妙玉',"sex":'f', "JL12": true}
+
+]
+
+
+var edges = [
+  {id:1,source:'f1',target:'p1',type:'child'},
+  {id:2,source:'f1',target:'p2',type:'child'},
+
+  {id:3,source:'f2',target:'p2',type:'married'},
+  {id:4,source:'f2',target:'p3',type:'child'},
+
+  {id:5,source:'f3',target:'p3',type:'married'},
+  {id:6,source:'f3',target:'p4',type:'child'},
+
+  {id:7,source:'f4',target:'p5',type:'married'},
+  // {id:8,source:'f4',target:'p6',type:'child'},
+  {id:9,source:'f4',target:'p7',type:'child'},
+
+  {id:10,source:'f5',target:'p7',type:'married'},
+  {id:11,source:'f5',target:'p8',type:'child'},
+  {id:12,source:'f5',target:'p9',type:'child'},
+
+  {id:13,source:'f6',target:'p8',type:'divorced'},
+  // {id:14,source:'f6',target:'p10',type:'married'},
+  {id:15,source:'f6',target:'p11',type:'child'},
+  // {id:16,source:'f6',target:'p12',type:'adopted'},
+
+  {id:17,source:'f7',target:'p11',type:'married'},
+  {id:18,source:'f7',target:'p13',type:'married'},
+
+  // {id:19,source:'f8',target:'p13',type:'child'},
+  // {id:20,source:'f8',target:'p14',type:'married'},
+  // {id:21,source:'f8',target:'p15',type:'child'},
+
+  {id:22,source:'f9',target:'p1',type:'married'},
+  {id:23,source:'f9',target:'p16',type:'married'},
+  {id:24,source:'f9',target:'p17',type:'child'},
+  {id:25,source:'f9',target:'p18',type:'child'},
+  {id:26,source:'f9',target:'p19',type:'child'},
+
+  {id:27,source:'f10',target:'p17',type:'married'},
+  // {id:28,source:'f10',target:'p20',type:'married'},
+  {id:29,source:'f10',target:'p21',type:'child'},
+  {id:30,source:'f10',target:'p22',type:'child'},
+
+  {id:31,source:'f11',target:'p21',type:'married'},
+  {id:32,source:'f11',target:'p23',type:'married'},
+  {id:33,source:'f11',target:'p24',type:'child'},
+
+  {id:34,source:'f12',target:'p18',type:'married'},
+  {id:35,source:'f12',target:'p25',type:'married'},
+  {id:36,source:'f12',target:'p26',type:'child'},
+  {id:37,source:'f12',target:'p27',type:'child'},
+  {id:38,source:'f12',target:'p28',type:'child'},
+
+  {id:39,source:'f13',target:'p18',type:'divorced'},
+  // {id:40,source:'f13',target:'p29',type:'divorced'},
+  {id:41,source:'f13',target:'p30',type:'child'},
+  // {id:42,source:'f13',target:'p31',type:'child'},
+
+  {id:43,source:'f14',target:'p26',type:'married'},
+  {id:44,source:'f14',target:'p32',type:'married'},
+  // {id:45,source:'f14',target:'p33',type:'child'},
+
+  {id:46,source:'f15',target:'p19',type:'married'},
+  // {id:47,source:'f15',target:'p34',type:'married'},
+  {id:48,source:'f15',target:'p35',type:'child'},
+
+  {id:49,source:'f16',target:'p25',type:'child'},
+  {id:50,source:'f16',target:'p36',type:'child'},
+  // {id:51,source:'f16',target:'p37',type:'child'},
+  // {id:52,source:'f16',target:'p38',type:'child'},
+  {id:53,source:'f16',target:'p39',type:'child'},
+
+  {id:54,source:'f17',target:'p39',type:'married'},
+  // {id:55,source:'f17',target:'p40',type:'child'},
+  {id:56,source:'f17',target:'p41',type:'child'},
+
+  // {id:57,source:'f18',target:'p42',type:'married'},
+  // {id:58,source:'f18',target:'p43',type:'married'},
+  // {id:59,source:'f18',target:'p44',type:'child'},
+
+  // {id:60,source:'f19',target:'p40',type:'divorced'},
+  // {id:61,source:'f19',target:'p44',type:'divorced'},
+
+  {id:62,source:'f20',target:'p36',type:'married'},
+  // {id:63,source:'f20',target:'p45',type:'child'},
+  {id:64,source:'f20',target:'p23',type:'child'},
+
+  {id:66,source:'f22',target:'p5',type:'child'},
+  {id:67,source:'f22',target:'p46',type:'married'},
+
+  {id:68,source:'f23',target:'p16',type:'child'},
+  {id:69,source:'f23',target:'p47',type:'married'},  
+
+  {id:70,source:'f24',target:'p46',type:'child'},
+  {id:71,source:'f24',target:'p47',type:'child'},
+
+  {id:70,source:'f25',target:'p28',type:'married'},
+  {id:71,source:'f25',target:'p41',type:'married'}
+]
+
+
+var width = 1200,
+   height = 50;
+
+var svg2 = d3.select('.button').append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g");
+
+var bts = [	{"fam": '賈府', "color": "olivedrab"}, 
+			{"fam": '史府', "color": "indigo"}, 
+			{"fam": '王府', "color": "red"}, 
+			{"fam": '薛府', "color": "goldenrod"}];
+
+var buttons = svg2.selectAll("rect")
+				.data(bts).enter()
+				.append("rect")
+				.attr("width", 80).attr("height", 40)
+				.attr('x', function(d, i){
+					return i*100 + 5;
+				})
+				.attr('y', 0)
+				.attr("fill", function(d){
+					return d.color;
+				})
+				.on("mouseover", function(){
+					d3.select(this)
+						.transition()
+						.duration(30)
+						.attr("width", 84)
+						.attr("height", 42);
+				})
+				.on("mouseout", function(){
+					d3.select(this)
+						.transition()
+						.duration(30)
+						.attr("width", 80)
+						.attr("height", 40);
+				})
+				.on("click", function(d) {
+			          var url;
+			          if (d.fam =="賈府")
+			          	url = "https://codepen.io/alalachin/full/mdeOWLy";
+			          else if (d.fam =="史府")
+			          	url = "https://codepen.io/alalachin/full/PoPbpLG";
+			          else if (d.fam =="王府")
+			          	url = "https://codepen.io/alalachin/full/WNQojeZ";
+			          else if (d.fam =="薛府")
+			          	url = "https://codepen.io/alalachin/full/jObVmPZ";
+			          window.location = url;
+ 				});
+//;
+
+
+svg2.selectAll("text")
+	.data(bts).enter()
+	.append("text")
+	.attr("fill", "white")
+	.attr('x', function(d, i){
+		return i*100 + 25;
+	})
+	.attr('y', 28)
+	.attr("font-size", "20px")
+	.text(function(d){
+		return d.fam;
+	});
+
+
+
+var width = 1200,
+   height = 700;
+//defining the chart
+var myChart = familyChart().nodes(nodes)
+                           .links(edges);
+
+var svg = d3.select('#forces').append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("background-color","yellow")
+            .call(myChart);
+
+
+
+
+function familyChart() {
+  var nodes = [],
+      links = [] // default height
+
+  function my(svg) {
+
+    var family_radius = 10;
+
+    var repelForce = d3.forceManyBody().strength(-5000).distanceMax(200)
+                       .distanceMin(25);
+
+    var simulation = d3.forceSimulation()
+						.alphaDecay(0.05)
+						.velocityDecay(0.5)
+						.force("center", d3.forceCenter(width / 2.5, height / 2))
+						.force("xAxis",d3.forceX(width/2).strength(0.4))
+						.force("yAxis",d3.forceY(height/2).strength(0.6))
+						.force("repelForce",repelForce)
+						.force("link", d3.forceLink().id(function(d) { return d.id }).distance(dist).strength(1.5))
+						.force("collide",d3.forceCollide().radius(function(d) { return d.r * 20; }).iterations(10).strength(1))
+
+    function dist(d){
+      //used by link force
+      return 1
+    }
+
+    //define the links
+    var links = svg.selectAll("foo")
+        .data(edges)
+        .enter()
+        .append("line")
+        .attr("stroke-width",function(d){
+          //stroke width - thicker if married/divorced
+            if(d.type == 'married' || d.type =='divorced'){
+              return "3.5px"
+            } else{
+              return "0.7px"
+            }})
+        .attr("stroke-dasharray", function(d){ //dashed if divorced
+          if(d.type == 'divorced'){
+            return "6,6"
+          } else{
+            return "0"
+          }
+        })
+      .attr("stroke", function(d){
+        if(d.type == 'married' || d.type=="divorced"){
+          return "grey"
+        } else if(d.type=='adopted'){
+          return "blue"
+        } else if(d.type=='married_invisible'){
+          return "white"
+        } else {
+          return "grey"
+        }
+      });
+
+    //define tooltip
+    var tooltip = d3.select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .html("");
+
+    //draw the nodes with drag functionality
+    var node = svg.selectAll("foo")
+        .data(nodes)
+        .enter()
+        .append("g")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+
+    var circles = node.append("circle")
+                      .attr("class","circle")
+                      .attr("r", function(d){
+                          if (d.type == "family"){
+                            return family_radius;
+                          } else{return 25;}})
+                       .attr("fill",function(d,i){
+                       	 if (d.JL12 == true)
+                          	return "gold";
+                         if(d.type == "family"){
+                         	return "white";
+                         }
+                         else{
+                         	if (d.sex == "f")
+                         		return "skyblue";
+                         	else
+                         		return "skyblue";
+                         }})
+                        .attr("stroke", function(d){
+                          //different borders for family, male and female
+                          if (d.type == "family"){
+                         	if (d.name == 'shi')
+                         		return "indigo";
+                         	else if (d.name == 'chia')
+                         		return "olivedrab";
+                         	else if (d.name == 'wang')
+                         		return "red";
+                         	else if (d.name == 'shue')
+                         		return "goldenrod";
+                         	return "silver";
+                          } 
+                          else { 
+                          	if(d.sex == "m"){return "skyblue"}
+                          	else if (d.JL12 == true){return "gold"}
+                            else {  return "skyblue"}}})
+                          .attr("stroke-width","5px");
+                          // .on("mouseover", function(d){
+                          //   if(d.type !== "family"){
+                          //     //sets tooltip.  t_text = content in html
+                          //     t_text = "<strong>" + titleCase(d.name) + "</strong><br>Age: " + d.age
+                          //     if(d.profession !== undefined){
+                          //       //only add profession if it is defined
+                          //       t_text += "<br>Profession: " + d.profession}
+                          //     tooltip.html(t_text)
+                          //     return tooltip.style("visibility", "visible");
+                          //   }  })
+                          //  .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+                          //  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+
+    //title case function used by tooltip and labels
+    function titleCase(str) {
+        str = str.toLowerCase().split(' ');
+        for (var i = 0; i < str.length; i++) {
+            str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+        }
+        return str.join(' ');
+    }
+
+    //append labels
+    var texts = node.append("text")
+        .style("fill", "black")
+        .attr("dx", 0)
+        .attr("dy", 5)
+        .attr("text-anchor","middle")
+        .text(function(d) {
+        	if (d.type !== "family")
+            	return titleCase(d.name);
+        });
+
+    //finally - attach the nodes and the links to the simulation
+    simulation.nodes(nodes);
+    simulation.force("link")
+              .links(edges);
+
+    //and define tick functionality
+   simulation.on("tick", function() {
+
+        links.attr("x1", function(d) {return d.source.x;})
+             .attr("y1", function(d) {return d.source.y;})
+             .attr("x2", function(d) {return d.target.x;})
+             .attr("y2", function(d) {return d.target.y;})
+
+        node.attr("transform", function(d){ return "translate(" + d.x + "," + d.y + ")"})
+    });
+
+
+    function dragstarted(d) {
+
+       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      if(d.type == 'family'){
+        //stickiness - toggles the class to fixed/not-fixed to trigger CSS
+        var my_circle = d3.select(this).selectAll('circle')
+        if(my_circle.attr('class') == 'fixed'){
+          my_circle.attr("class","not-fixed")
+        }else{
+          my_circle.attr("class","fixed")
+        }
+      }
+    }
+
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+       if (!d3.event.active) simulation.alphaTarget(0);
+       //stickiness - unfixes the node if not-fixed or a person
+       var my_circle = d3.select(this).selectAll('circle')
+       if(my_circle.attr('class') == 'not-fixed'  || d.type !== 'family'){
+         d.fx = null;
+         d.fy = null;
+       }
+
+    }
+
+    function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+      //for arcs - from excellent link - http://jsbin.com/quhujowota/1/edit?html,js,output
+        var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+
+      return {
+        x: centerX + (radius * Math.cos(angleInRadians)),
+        y: centerY + (radius * Math.sin(angleInRadians))
+      };
+    }
+
+    function describeArc(x, y, radius, startAngle, endAngle){
+      //for arcs - from excellent link - http://jsbin.com/quhujowota/1/edit?html,js,output
+
+        var start = polarToCartesian(x, y, radius, endAngle);
+        var end = polarToCartesian(x, y, radius, startAngle);
+
+        var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+        var d = [
+            "M", start.x, start.y,
+            "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+        ].join(" ");
+
+        return d;
+    }
+
+
+  }
+
+  my.width = function(value) {
+    if (!arguments.length) return width;
+    width = value;
+    return my;
+  };
+
+  my.nodes = function(value) {
+    if (!arguments.length) return nodes;
+    nodes = value;
+    return my;
+  };
+
+  my.links = function(value) {
+    if (!arguments.length) return links;
+    links = value;
+    return my;
+  };
+
+  my.height = function(value) {
+    if (!arguments.length) return height;
+    height = value;
+    return my;
+  };
+
+  return my;
+}
+
+
+  </script>
+  </body>
+	<h2><font face='tahoma'>設計說明</font></h2>
+		<p>
+			<li> 操作方式：可拖曳動空心圓點，將點線移至想要的位置觀察、或調整視線。<br></li>
+			<li> 圖中<b>黃點為紅樓夢中的十二金釵</b>，<b>藍點為可將她們串連起來，並展現四大家族聯姻關係，最精簡的家族成員們</b>。<br></li>
+			<li> 每個<b>空心小圓為一個核心家庭</b>，<b>以不同顏色區別該家庭屬于哪一姓之府上</b>：賈府->綠色 | 史府->紫色 | 王府->紅色 | 薛府->橘色。此四大家族之外以灰色表示。<br></li>
+			<li> 每個空心小圓以粗 / 細 / 實 / 虛線連接家庭成員，其中：<b>粗線->婚姻關係</b> | <b>細線->子女關係</b><br></li>
+			<li> 粗線中又可分為：<b>實線->男主人嫡出之家</b> | <b>虛線->男主人庶出之家</b><br></li>
+			<li> 賈、史、王、薛之<b>個別完整族譜</b>可在上方按鈕的連結看到，族譜內藍色方框為男性、粉色方框為女性。（也是以d3js製作）</li>
+		</p>
+
+	<h2><font face='tahoma'>設計選擇</font></h2>
+		<p>
+		<h3>What</h3>
+			<li> <b>Data and Dataset Types</b>: Network<br></li>
+			<li> <b>Data Types - Items</b>: 人物<br></li>
+			<li> <b>Data Types - Attributes</b>: 府別、是否為金陵十二釵、宗代<br></li>
+			<li> <b>Data Types - Links</b>: 嫡婚、庶婚、婚生<br></li>
+			<li> <b>Dataset Avalibility</b>: Static<br></li>
+		</p>
+
+		<p>
+		<h3>Why</h3>
+			<li> <b>Consume</b>: 紅樓夢以角色眾多、門第利害關係繁複聞名，其中金陵十二釵是裡面年輕一代的女孩，<b>我認為她們是家族聯姻下的「產物」</b>。</li>
+			<li> <b>Target</b>: 因此我希望<b>透過紅樓夢中的十二金釵，呈現四大家族的聯姻關係</b>。</li>
+			<li> <b>Produce</b>: 涵括了十二金釵、去除了與十二金釵或家族聯姻無關的人物，製成親屬關係網。<br></li>
+		</p>
+
+		<p>
+		<h3>How</h3>
+			<li> 使用 <b>force layout</b> 的 <b>network</b>，觀察四個家族的聯姻、婚生關係。<br></li>
+			<li> 並將想呈現的 attributes 以顏色、節點、連線、線條粗細表現出來。<br></li>
+		</p>
+	<h2><font face='tahoma'>經驗法則</font></h2>
+		<p>
+			<li> 一般來說，家庭樹 (family tree) 並不會出現 cycle。<br></li>
+			<li> 然而古代講求門當戶對，也不忌諱近親通婚，因此透過 <b>force layout</b> 的 <b>network</b>，可觀察四個家族的聯姻、婚生關係。<br></li>
+			<li> 紅樓夢以「賈府」為故事主軸，可以看見圖中以綠色空心圓的賈姓家庭佔多數；<br></li>
+			<li> 若同種顏色的空心圓點，與綠點構成越多 <b>cycle</b>，則代表該家族<b>與賈家的聯姻關係越密切</b>。（見備註）<br></li>
+			<li> 也可透過連線追蹤祖先，觀察每個人物之間的<b>親等</b>、甚至判斷是否近親通婚、是近親的話又<b>多近</b>呢？</li>
+			<li> 十二金釵中唯有「妙玉」與其他 11 金釵無親戚關係。<br></li>
+			<li> <b>備註：可將同顏色的空心圓點拖曳且重疊在一起，每種顏色皆然，如此可以很清楚的觀察每個家族與賈家有多少樁聯姻。</b><br></li>
+		</p>
+
+
+	  	<li><a href="https://nightelfmeowmeow.com/1105014-reading-cn-novel-dream-of-the-red-chamber-family-tree/" title="Google" target="_blank">資料來源：閱讀 | CN | 明清小說 | 紅樓夢 | 人物關係表 | 四大家族 | 5 分鐘弄懂紅樓夢人物關係 | 淺談紅樓夢</a></li>
+</html>

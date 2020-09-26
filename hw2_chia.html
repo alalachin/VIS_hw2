@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<titel>賈家</title>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<style>
+		rect{
+			fill: pink, skyblue;
+			stroke: pink;
+			stroke-width: 0;
+			width: 60px;
+			height: 30px;}
+		path{
+			fill: none; 
+			stroke: silver;
+			stroke-width: 2;}
+		text{
+			dominant-baseline: middle;
+			text-anchor: middle;
+		}
+		.hide{
+			visibility: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="height:0px;overflow-y:auto">
+	<script>
+		var width = 1200, height = 700;
+		var dist_spouse = 60;
+		var svg = d3.select("body").append("svg")
+					.attr("width", width).attr("height", height)
+					.append("g").attr("transform", "translate(50, 50)");
+
+		var data = [{"child": "賈府", "parent": "", "sex": "none"},
+					{"child": "賈演", "parent": "賈府", "sex": "none"},
+					{"child": "賈源", "parent": "賈府", "sex": "none"},
+					{"child": "賈代化", "parent": "賈演", "sex": "male"},
+					{"child": "賈敬", "parent": "賈代化", "sex": "male"},
+					{"child": "賈敷", "parent": "賈代化", "sex": "male"},
+					{"child": "賈珍", "parent": "賈敬", "sex": "male", "spouse": "尤氏"},
+					{"child": "賈惜春", "parent": "賈敬", "sex": "female"},
+					{"child": "賈蓉", "parent": "賈珍", "sex": "male", "spouse": "秦可卿"},
+					{"child": "賈薔", "parent": "賈珍", "sex": "male"},		
+					{"child": "賈代善", "parent": "賈源", "sex": "male", "spouse": "賈母"},
+					{"child": "賈赦", "parent": "賈代善", "sex": "male", "spouse": "邢夫人"},
+					{"child": "賈政", "parent": "賈代善", "sex": "male", "spouse": "王夫人", "mistress": "趙姨娘"},
+					{"child": "賈敏", "parent": "賈代善", "sex": "female", "spouse": "林如海"},
+					{"child": "賈璉", "parent": "賈赦", "sex": "male", "spouse": "王熙鳳"},
+					{"child": "賈迎春", "parent": "賈赦", "sex": "female"},
+					{"child": "賈珠", "parent": "賈政", "sex": "male", "spouse": "李紈"},
+					{"child": "賈元春", "parent": "賈政", "sex": "female"},
+					{"child": "賈寶玉", "parent": "賈政", "sex": "male"},
+					{"child": "賈探春", "parent": "賈政", "sex": "female"},
+					{"child": "賈環", "parent": "賈政", "sex": "male"},
+					{"child": "林黛玉", "parent": "賈敏", "sex": "female"},
+					{"child": "賈巧姐", "parent": "賈璉", "sex": "female"},
+					{"child": "賈蘭", "parent": "賈珠", "sex": "male"}
+					];
+
+		var dataStructure = d3.stratify()
+							.id(function(d){return d.child;})
+							.parentId(function(d) {return d.parent;})(data);
+
+		var treeStructure = d3.tree().size([1100, 480]);
+		var information = treeStructure(dataStructure);
+
+
+		var connections = svg.append("g").selectAll("path")
+							.data(information.links());
+
+		connections.enter().append("path")
+					.attr("d", function(d){
+						if (d.source.data.spouse == undefined)
+							return ("M" + (d.source.x+30) + "," + d.source.y + "v 50 H" + 
+								(d.target.x+30) + "V " + d.target.y);
+
+						else
+							return ("M" + (d.source.x+30) + "," + d.source.y + "v 50 H" + 
+								(d.target.x+30) + "V " + d.target.y);
+					});		
+		
+
+		var spouse_conns = svg.append("g").selectAll("path")
+							.data(information.links());
+
+		spouse_conns.enter().append("path")
+					.attr("d", function(d){
+						var from=0, to=0;
+						if (d.source.data.mistress != undefined){
+							from = d.source.x+100;
+							to = (d.source.x-60);
+						}
+						else if (d.source.data.spouse != undefined){
+							from = d.source.x;
+							to = (d.source.x-60);
+						}
+						return "M" + from + "," + d.source.y + 
+								"H" + to ;
+					});
+
+
+		var rectangles = svg.append("g").selectAll("rect")
+						.data(information.descendants());
+
+		rectangles.enter().append("rect")
+				.attr("x", function(d){return d.x;})
+				.attr("y", function(d){return d.y-15;})
+				.attr("fill", function(d){
+					if (d.data.sex == "female")
+						return "pink";
+					else if (d.data.sex == "male")
+						return "skyblue";
+					else
+						return "orange";
+				});
+
+		var spouseRects = svg.append("g").selectAll("rect")
+						.data(information.descendants());
+
+		spouseRects.enter().append("rect")
+				.attr("x", function(d){return d.x-70;})
+				.attr("y", function(d){return d.y-15;})
+				.attr("fill", function(d){
+					if (d.data.sex == "female"){
+						return "skyblue";}
+					else
+						return "pink";
+				})
+				.classed("hide", function(d){
+					if(d.data.spouse == undefined)
+						return true;
+					return false;
+				});
+
+		var mistressRects = svg.append("g").selectAll("rect")
+						.data(information.descendants());
+
+		mistressRects.enter().append("rect")
+				.attr("x", function(d){return d.x+70;})
+				.attr("y", function(d){return d.y-15;})
+				.attr("fill", "pink")
+				.classed("hide", function(d){
+					if(d.data.mistress == undefined)
+						return true;
+					return false;
+				});
+
+
+		var names = svg.append("g").selectAll("text")
+					.data(information.descendants());
+
+		names.enter().append("text")
+					.text(function(d) {return d.data.child;})
+					.attr("x", function(d){return d.x+30;})
+					.attr("y", function(d){return d.y;});
+
+		var spouseNames = svg.append("g").selectAll("text")
+					.data(information.descendants());
+
+		spouseNames.enter().append("text")
+					.text(function(d){
+						return d.data.spouse;})
+					.attr("x", function(d){return d.x-40;})
+					.attr("y", function(d){return d.y;});
+
+
+		var mistressNames = svg.append("g").selectAll("text")
+					.data(information.descendants());
+
+		mistressNames.enter().append("text")
+					.text(function(d){
+						return d.data.mistress;})
+					.attr("x", function(d){return d.x+100;})
+					.attr("y", function(d){return d.y;});
+	</script>
+	</div>
+</body>
+
+</html>
